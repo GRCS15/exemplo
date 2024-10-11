@@ -1,0 +1,65 @@
+﻿@model IEnumerable<Grafico.Models.Feedback>
+
+@{
+    ViewData["Title"] = "Feedback";
+}
+
+<h1 class="text-center">Feedback</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Comentario)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Data)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Nota)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                
+                
+                <td>
+                    @Html.DisplayFor(modelItem => item.Comentario)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Data)
+                </td>
+                <!--esquema das estrela-->
+                <td>
+                    <div class="star-rating">
+                        @for (int i = 5; i >= 1; i--)
+                        {
+                            <input type="radio" id="star@item.Feedback_Id@i" name="Estrelas_@item.Feedback_Id" value="@i"
+                            @(item.Nota == i ? "checked" : "") disabled />
+                            <label for="star_@item.Feedback_Id@i" title="@i estrelas">★</label>
+                        }
+                    </div>
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.Feedback_Id" class="btn btn-primary">
+                        <i class="bi bi-folder">Detalhes</i>
+                    </a>
+                    <a asp-action="Delete" asp-route-id="@item.Feedback_Id" class="btn btn-danger">
+                        <i class="bi bi-trash">Deletar</i>
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div class="text-end">
+    <a asp-action="Grafic" class="btn btn-primary">Gerar Gráfico</a>
+</div>
